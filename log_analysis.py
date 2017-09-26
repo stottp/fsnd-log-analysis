@@ -54,11 +54,10 @@ def most_popular_authors():
 def one_percent_error_loads():
     """Select the days where there are >= 1% error load."""
     print '3. The days where there are more than  1% load error are'
-    return ("""SELECT gday, ((err::decimal / allc::decimal) * 100) as perc"""
-            """ FROM (select date(time) as gday, count(status) as allc, """
-            """ count(CASE WHEN status = '200 OK' THEN 1 END) AS ok,"""
-            """ count(CASE WHEN status = '404 NOT FOUND' THEN 1 END) AS err """
-            """ FROM log GROUP BY gday) as errreq;""")
+    return ("""SELECT gday, perc FROM (select date(time) as gday,"""
+            """ ((count(CASE WHEN status = '404 NOT FOUND' THEN 1"""
+            """ END)::decimal / count(status)::decimal) * 100.0) as perc"""
+            """ FROM log GROUP BY gday) as errreq where perc >=1;""")
 
 
 if __name__ == '__main__':
