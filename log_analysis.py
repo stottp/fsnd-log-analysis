@@ -11,7 +11,7 @@ import sys
 DBNAME = "news"
 
 
-def connect(query, func):
+def execute_query(query, func):
     """Connect to database, handle errors and if none, return results."""
     try:
         db = psycopg2.connect(database=DBNAME)
@@ -61,6 +61,6 @@ def one_percent_error_loads():
 
 
 if __name__ == '__main__':
-    connect(most_popular_articles(), most_popular_articles.__name__)
-    connect(most_popular_authors(), most_popular_authors.__name__)
-    connect(one_percent_error_loads(), one_percent_error_loads.__name__)
+    execute_query(most_popular_articles(), most_popular_articles.__name__)
+    execute_query(most_popular_authors(), most_popular_authors.__name__)
+    execute_query(one_percent_error_loads(), one_percent_error_loads.__name__)
